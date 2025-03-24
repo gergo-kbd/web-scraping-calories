@@ -1,7 +1,7 @@
 import requests
 import json
 
-API_KEY = "C2hbBSIucd88eskFFJphpWYc30JmA6Tv45Rn421I"  # Itt add meg a saját API kulcsodat
+API_KEY = "C2hbBSIucd88eskFFJphpWYc30JmA6Tv45Rn421I"  # here you add your own API key
 BASE_URL = "https://api.nal.usda.gov/fdc/v1/foods/search"
 
 def get_food_id(query):
@@ -9,7 +9,7 @@ def get_food_id(query):
     params = {
         "api_key": API_KEY,
         "query": query,
-        "pageSize": 1,  # Csak az első találat kell
+        "pageSize": 1,  # only need the first result
         "dataType": ["Foundation", "Survey (FNDDS)"]
     }
     
@@ -22,7 +22,7 @@ def get_food_id(query):
             return first_food.get("fdcId")
     return None
 
-# Próbáld ki csirkemellre
+# Try it for chicken breast
 fdc_id = get_food_id("Chicken breast")
 print(f"🔎 FDC ID: {fdc_id}")
 
@@ -40,7 +40,7 @@ def get_food_nutrients(fdc_id):
     if response.status_code == 200:
         data = response.json()
         
-        # Az új JSON struktúrához igazított keresés
+        # tweaked to json format
         nutrients = {n["nutrient"]["name"]: n["amount"] for n in data.get("foodNutrients", [])}
 
         return {
@@ -50,10 +50,10 @@ def get_food_nutrients(fdc_id):
             "carbs": nutrients.get("Carbohydrate, by difference", "N/A")
         }
     else:
-        print(f"❌ Hiba! Státuszkód: {response.status_code}")
+        print(f"❌ Error! Status: {response.status_code}")
         return None
 
-# Próbáld ki az előzőleg kapott FDC ID-val
+# print the data behind the fdc id
 nutrients = get_food_nutrients(fdc_id)
 print(nutrients)
 

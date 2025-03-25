@@ -5,7 +5,7 @@ API_KEY = "C2hbBSIucd88eskFFJphpWYc30JmA6Tv45Rn421I"  # here you add your own AP
 BASE_URL = "https://api.nal.usda.gov/fdc/v1/foods/search"
 
 def get_food_id(query):
-    """Lekéri az első találat FDC ID-ját az USDA API-ból"""
+    """Query the first result's FDC id from USDA API """
     params = {
         "api_key": API_KEY,
         "query": query,
@@ -27,9 +27,9 @@ fdc_id = get_food_id("Chicken breast")
 print(f"🔎 FDC ID: {fdc_id}")
 
 def get_food_nutrients(fdc_id):
-    """Lekérdezi az adott FDC ID-hoz tartozó makrókat"""
+    """Query nutrition data to the corresponding FDC id """
     if not fdc_id:
-        print("❌ Nincs FDC ID, nem lehet lekérdezni a tápértékeket.")
+        print("❌ No FDC ID, cant get nutrition data.")
         return None
 
     url = f"https://api.nal.usda.gov/fdc/v1/food/{fdc_id}"

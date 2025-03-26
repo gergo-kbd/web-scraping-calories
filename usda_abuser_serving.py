@@ -24,7 +24,7 @@ def check_serving_size(fdc_id):
         print(json.dumps(data, indent=4))
     
     else:
-        print(f"❌ Hiba! Státuszkód: {response.status_code}")
+        print(f"❌ Error! Státuszkód: {response.status_code}")
 
 # Próbáld ki az adott FDC ID-ra
 check_serving_size(2705964)

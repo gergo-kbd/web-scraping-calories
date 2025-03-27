@@ -6,7 +6,7 @@ BASE_URL = "https://api.nal.usda.gov/fdc/v1/foods/search"
 
 
 def check_serving_size(fdc_id):
-    """Lekérdezi, hogy az USDA API milyen mennyiségre vonatkoztatja az adatokat"""
+    """Query nutrition data to the corresponding FDC id"""
     url = f"https://api.nal.usda.gov/fdc/v1/food/{fdc_id}"
     params = {"api_key": API_KEY}
     
@@ -19,8 +19,8 @@ def check_serving_size(fdc_id):
         serving_size = data.get("servingSize", "Nincs megadva")
         serving_unit = data.get("servingSizeUnit", "N/A")
 
-        print(f"🍽 Adagméret: {serving_size} {serving_unit}")
-        print("🔍 Teljes adatstruktúra ellenőrzéshez:")
+        print(f"🍽 Serving size: {serving_size} {serving_unit}")
+        print("🔍 To check the whole datastructure:")
         print(json.dumps(data, indent=4))
     
     else:

@@ -1,7 +1,7 @@
 import requests
 import json
 
-API_KEY = "C2hbBSIucd88eskFFJphpWYc30JmA6Tv45Rn421I"  # Itt add meg a saját API kulcsodat
+API_KEY = ""  # place your usda key here
 BASE_URL = "https://api.nal.usda.gov/fdc/v1/foods/search"
 
 

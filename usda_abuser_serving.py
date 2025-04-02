@@ -14,6 +14,9 @@ def check_serving_size(fdc_id):
     
     if response.status_code == 200:
         data = response.json()
+
+        with open("output.txt", "w", encoding="utf-8") as file:
+            json.dump(data, file, indent=4, ensure_ascii=False)  # Formázott mentés
         
         # Ellenőrizzük, hogy van-e adagméret megadva
         serving_size = data.get("servingSize", "Nincs megadva")
@@ -25,6 +28,8 @@ def check_serving_size(fdc_id):
     
     else:
         print(f"❌ Error! Statuscode: {response.status_code}")
+
+
 
 # Próbáld ki az adott FDC ID-ra
 check_serving_size(2705964)

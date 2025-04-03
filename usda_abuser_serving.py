@@ -32,5 +32,5 @@ def check_serving_size(fdc_id):
 
 
 # Próbáld ki az adott FDC ID-ra
-#check_serving_size(2705964)
-check_serving_size(356554)
+check_serving_size(2705964)
+#check_serving_size(356554)

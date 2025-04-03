@@ -1,7 +1,7 @@
 import requests
 import json
 
-API_KEY = "C2hbBSIucd88eskFFJphpWYc30JmA6Tv45Rn421I"  # here you add your own API key
+API_KEY = ""  # here you add your own API key
 BASE_URL = "https://api.nal.usda.gov/fdc/v1/foods/search"
 
 def get_food_id(query):

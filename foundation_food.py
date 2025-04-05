@@ -2,7 +2,7 @@ import requests
 import json
 
 api_key = ""  # Ide írd be az API kulcsodat
-search_term = "rice white"  # Példa keresési kifejezés
+search_term = "rice, raw"  # Példa keresési kifejezés
 api_url = f"https://api.nal.usda.gov/fdc/v1/foods/search?api_key={api_key}&query={search_term}&dataType=Foundation"
 
 response = requests.get(api_url)

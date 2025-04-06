@@ -35,7 +35,7 @@ def get_food_nutrients(fdc_id):
         return None
 
     url = f"https://api.nal.usda.gov/fdc/v1/food/{fdc_id}"
-    params = {"api_key": API_KEY}
+    params = {"api_key": api_key}
     
     response = requests.get(url, params=params)
     

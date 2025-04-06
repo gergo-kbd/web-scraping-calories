@@ -1,14 +1,16 @@
 import requests
 import json
 
-API_KEY = ""  # place your usda key here
+with open("api_key.txt", "r") as file:
+    api_key = file.read().strip()
+
 BASE_URL = "https://api.nal.usda.gov/fdc/v1/foods/search"
 
 
 def check_serving_size(fdc_id):
     """Query nutrition data to the corresponding FDC id"""
     url = f"https://api.nal.usda.gov/fdc/v1/food/{fdc_id}"
-    params = {"api_key": API_KEY}
+    params = {"api_key": api_key}
     
     response = requests.get(url, params=params)
     

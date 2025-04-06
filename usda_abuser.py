@@ -1,10 +1,13 @@
 import requests
 
-API_KEY = ""  # place your usda key here  
+
+with open("api_key.txt", "r") as file:
+    api_key = file.read().strip()
+ 
 BASE_URL = "https://api.nal.usda.gov/fdc/v1/foods/search"
 
 def get_nutrition(food_name):
-    params = {"api_key": API_KEY, "query": food_name, "pageSize": 1}
+    params = {"api_key": api_key, "query": food_name, "pageSize": 1}
     response = requests.get(BASE_URL, params=params)
     
     if response.status_code == 200:

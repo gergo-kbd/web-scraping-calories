@@ -1,7 +1,9 @@
 import requests
 import json
 
-api_key = "" # Ide ird be az API kulcsodat
+with open("api_key.txt", "r") as file:
+    api_key = file.read().strip()
+
 search_term = "rice"
 api_url = f"https://api.nal.usda.gov/fdc/v1/foods/search?api_key={api_key}&query={search_term}"
 

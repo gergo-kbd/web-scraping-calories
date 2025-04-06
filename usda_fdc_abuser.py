@@ -1,13 +1,15 @@
 import requests
 import json
 
-API_KEY = ""  # here you add your own API key
+with open("api_key.txt", "r") as file:
+    api_key = file.read().strip()
+
 BASE_URL = "https://api.nal.usda.gov/fdc/v1/foods/search"
 
 def get_food_id(query):
     """Query the first result's FDC id from USDA API """
     params = {
-        "api_key": API_KEY,
+        "api_key": api_key,
         "query": query,
         "pageSize": 1,  # only need the first result
         "dataType": ["Foundation", "Survey (FNDDS)"]

@@ -1,14 +1,17 @@
 import requests
 import json
 
-API_KEY = ""  # place your usda key here
+with open("api_key.txt", "r") as file:
+    api_key = file.read().strip()
+
+
 BASE_URL = "https://api.nal.usda.gov/fdc/v1/foods/search"
 
 
 def get_general_food_names(query, results=10):
     """Lekérdezi az USDA API-ból az általános (nem márkázott) élelmiszerek neveit."""
     params = {
-        "api_key": API_KEY,
+        "api_key": api_key,
         "query": query,
         "pageSize": results,
         "dataType": ["Foundation", "Survey (FNDDS)"]  # Csak általános élelmiszerek

@@ -12,6 +12,7 @@ def get_nutrition(food_name):
     
     if response.status_code == 200:
         data = response.json()
+        print(data)
         
         # Ellenőrizzük, hogy van-e találat
         if "foods" in data and len(data["foods"]) > 0:

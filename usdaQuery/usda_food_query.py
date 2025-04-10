@@ -43,6 +43,14 @@ class UsdaFoodQuery:
         except Exception:
             print("Cannot read json from the response.")
             raise
+        ###
+        except NoResultsFound as e:
+            print("Search results:", e)
+            raise
+
+        except requests.exceptions.RequestException as req_err:
+            print(f"Request error: {req_err}")
+            return None  # ha ezt várod a tesztben
 
         except Exception as e:
             print("General error:", e)

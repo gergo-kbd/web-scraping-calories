@@ -3,3 +3,5 @@ foundationDownload
 usda_pretty.json
 foundation_foods.db
 calorie_killer.py
+usdaQuery/__pycache__/
+tests/__pycache__/

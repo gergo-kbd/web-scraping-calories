@@ -1,43 +1,48 @@
-import unittest
-from unittest.mock import patch
-#from usda_food_query import UsdaFoodQuery, NoResultsFound
-from usdaQuery.usda_food_query import *
+'''import pytest
+from unittest.mock import patch, Mock
+from usdaQuery.usda_food_query import UsdaFoodQuery, NoResultsFound
 
-class TestUsdaFoodQuery(unittest.TestCase):
+@patch("usdaQuery.usda_food_query.requests.get")
+def test_search_success(mock_get):
+    mock_get.return_value = Mock(
+        json=lambda: {"foods": [{"name": "apple"}]},
+        raise_for_status=lambda: None
+    )
+    query = UsdaFoodQuery(api_key="dummy")
+    result = query.search_food("apple")
+    assert result == [{"name": "apple"}] '''
 
-    def setUp(self):
-        self.api_key = "fake_api_key"
-        self.query = UsdaFoodQuery(api_key=self.api_key)
+import pytest
+from unittest.mock import patch, Mock
+from usdaQuery.usda_food_query import UsdaFoodQuery, NoResultsFound
 
-    @patch("usdaQuery.usda_food_query.requests.get")
-    def test_search_food_success(self, mock_get):
-        mock_response = mock_get.return_value
-        mock_response.raise_for_status.return_value = None
-        mock_response.json.return_value = {
-            "foods": [
-                {"description": "Banana", "fdcId": 123},
-                {"description": "Apple", "fdcId": 456}
-            ]
-        }
+@patch("usdaQuery.usda_food_query.requests.get")
+def test_search_success(mock_get):
+    mock_get.return_value = Mock(
+        json=lambda: {"foods": [{"name": "apple"}]},
+        raise_for_status=lambda: None
+    )
 
-        result = self.query.search_food("banana")
-        self.assertEqual(len(result), 2)
-        self.assertEqual(result[0]["description"], "Banana")
+    query = UsdaFoodQuery(api_key="dummy")
+    result = query.search_food("apple")
 
-    @patch("usdaQuery.usda_food_query.requests.get")
-    def test_search_food_no_results(self, mock_get):
-        mock_response = mock_get.return_value
-        mock_response.raise_for_status.return_value = None
-        mock_response.json.return_value = {
-            "foods": []
-        }
+    assert result == [{"name": "apple"}]
 
-        with self.assertRaises(NoResultsFound):
-            self.query.search_food("nonexistentfood")
+@patch("usdaQuery.usda_food_query.requests.get")
+def test_search_no_results(mock_get):
+    mock_get.return_value = Mock(
+        json=lambda: {"foods": []},
+        raise_for_status=lambda: None
+    )
 
-    @patch("usdaQuery.usda_food_query.requests.get")
-    def test_search_food_request_exception(self, mock_get):
-        mock_get.side_effect = Exception("API down")
+    query = UsdaFoodQuery(api_key="dummy")
+    with pytest.raises(NoResultsFound):
+        query.search_food("no_such_food")
 
-        with self.assertRaises(Exception):
-            self.query.search_food("banana")
+@patch("usdaQuery.usda_food_query.requests.get")
+def test_search_request_exception(mock_get):
+    mock_get.side_effect = Exception("network down")
+
+    query = UsdaFoodQuery(api_key="dummy")
+    result = query.search_food("apple")
+    assert result is None

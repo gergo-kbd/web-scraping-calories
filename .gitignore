@@ -7,3 +7,4 @@ usdaQuery/__pycache__/
 tests/__pycache__/
 *.json
 output.txt
+legacy/__pycache__/

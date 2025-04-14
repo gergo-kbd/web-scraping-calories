@@ -6,3 +6,4 @@ calorie_killer.py
 usdaQuery/__pycache__/
 tests/__pycache__/
 *.json
+output.txt

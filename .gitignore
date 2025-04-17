@@ -4,6 +4,7 @@ usda_pretty.json
 foundation_foods.db
 calorie_killer.py
 usdaQuery/__pycache__/
+OpenFoodApi/__pycache__/
 tests/__pycache__/
 .pytest_cache
 *.json

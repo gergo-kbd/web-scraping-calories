@@ -5,6 +5,7 @@ foundation_foods.db
 calorie_killer.py
 usdaQuery/__pycache__/
 tests/__pycache__/
+.pytest_cache
 *.json
 output.txt
 legacy/__pycache__/

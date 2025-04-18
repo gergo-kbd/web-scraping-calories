@@ -4,75 +4,43 @@ from typing import List, Optional, Dict
 
 
 class OpenFoodQuery:
-    """
-    A class to interact with the Open Food Facts API.
-    """
-
     BASE_URL = "https://world.openfoodfacts.org/api/v2"
 
     def __init__(self, language: str = "en") -> None:
-        """
-        Initializes the OpenFoodFactsAPI client.
-
-        Args:
-            language (str): The language for the API responses (e.g., "en", "fr"). Defaults to "en".
-        """
+        # lang for the API response
         self.language = language
 
     def _get(self, endpoint: str, params: Optional[Dict] = None) -> Dict:
-        """
-        Internal method to make GET requests to the API.
-
-        Args:
-            endpoint (str): The API endpoint (e.g., "/product/0000000000001.json").
-            params (Optional[Dict]): Query parameters for the request.
-
-        Returns:
-            Dict: The JSON response from the API as a dictionary.
-
-        Raises:
-            requests.exceptions.HTTPError: If the HTTP request returns an error status code.
-        """
+        
         url = f"{self.BASE_URL}{endpoint}"
         try:
+            
             response = requests.get(url, params=params)
             response.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
             return response.json()
+        
         except requests.exceptions.HTTPError as e:
+
             raise Exception(f"API request failed: {e}")
+        
         except requests.exceptions.RequestException as e:
+
             raise Exception(f"Network error: {e}")
 
     def get_product(self, barcode: str) -> Optional[Dict]:
-        """
-        Retrieves information about a product by its barcode.
-
-        Args:
-            barcode (str): The barcode of the product.
-
-        Returns:
-            Optional[Dict]: A dictionary containing the product information, or None if not found.
-        """
+       
         endpoint = f"/product/{barcode}.json"
         data = self._get(endpoint)
+        
         if data["status"] == 1:  # Product found
             return data["product"]
         else:
             return None
 
     def search_products(self, search_term: str, page: int = 1, page_size: int = 20) -> Dict:
-        """
-        Searches for products based on a search term.
-
-        Args:
-            search_term (str): The term to search for (e.g., "chocolate").
-            page (int): The page number of the results to retrieve. Defaults to 1.
-            page_size (int): The number of results per page. Defaults to 20.
-
-        Returns:
-            Dict: A dictionary containing the search results.
-        """
+        
         endpoint = "/cgi/search.pl"
+
         params = {
             "search_terms": search_term,
             "search_simple": 1,  # Use simple search

@@ -1,6 +1,13 @@
 import requests
 import json
 from typing import List, Optional, Dict
+import logging
+
+class OpenFoodFactsAPIError(Exception):
+    pass
+
+class ProductNotFoundError(OpenFoodFactsAPIError):
+    pass
 
 
 class OpenFoodQuery:
@@ -13,6 +20,7 @@ class OpenFoodQuery:
     def _get(self, endpoint: str, params: Optional[Dict] = None) -> Dict:
         
         url = f"{self.BASE_URL}{endpoint}"
+
         try:
             
             response = requests.get(url, params=params)
@@ -21,21 +29,35 @@ class OpenFoodQuery:
         
         except requests.exceptions.HTTPError as e:
 
-            raise Exception(f"API request failed: {e}")
+            logging.error(f"API request failed to {url} with status code {response.status_code}: {e}")
+
+            raise OpenFoodFactsAPIError(f"API request failed: {e}")
         
         except requests.exceptions.RequestException as e:
 
-            raise Exception(f"Network error: {e}")
+            logging.error(f"Netwrok error during request to {url}: {e}")
+
+            raise OpenFoodFactsAPIError(f"API request failed: {e}")
 
     def get_product(self, barcode: str) -> Optional[Dict]:
        
         endpoint = f"/product/{barcode}.json"
-        data = self._get(endpoint)
-        
-        if data["status"] == 1:  # Product found
-            return data["product"]
-        else:
-            return None
+
+        try:
+            data = self._get(endpoint)
+            if data["status"] == 1: # HIT
+                return data["product"]
+            
+            elif data["status"] == 0: # NO HIT
+                logging.warning(f"Product with barcode: {barcode} not found.")
+                raise ProductNotFoundError(f"Product with barcode: {barcode} not found.")
+            
+            else: # other error
+                logging.error(f"Unexpected API response for barcode {barcode}: {data}")
+                raise OpenFoodFactsAPIError(f"Unexpected API response: {data}")
+            
+        except OpenFoodFactsAPIError as e:
+            raise
 
     def search_products(self, search_term: str, page: int = 1, page_size: int = 20) -> Dict:
         

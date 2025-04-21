@@ -9,12 +9,11 @@ class OpenFoodFactsAPIError(Exception):
 class ProductNotFoundError(OpenFoodFactsAPIError):
     pass
 
-
+   
 class OpenFoodQuery:
     BASE_URL = "https://world.openfoodfacts.org/api/v2"
 
     def __init__(self, language: str = "en") -> None:
-        # lang for the API response
         self.language = language
 
     def _get(self, endpoint: str, params: Optional[Dict] = None) -> Dict:

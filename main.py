@@ -20,6 +20,8 @@ if __name__ == "__main__":
         print("💥 Error:", e)
 
         '''
+
+
 from OpenFoodApi.OpenFoodQuery import OpenFoodQuery
 import json
 import requests
@@ -35,9 +37,9 @@ def get_search_result_count(search_term):
 
 
 if __name__ == "__main__":
-    # Az osztály inicializálása angol nyelvű válaszokkal
+    
     api_client = OpenFoodQuery(language="en")
-    '''
+    
     # Példa: Termék keresése vonalkód alapján
     print("Példa: Termék keresése vonalkód alapján...")
     barcode = "737628064502"  # Helyettesítsd egy valós vonalkóddal
@@ -60,7 +62,40 @@ if __name__ == "__main__":
             print("-" * 20)
     else:
         print(f"Nincs találat a következő keresőkifejezésre: {search_term}")
-    '''
+    
     search_term = "chocolate"
     result_count = get_search_result_count(search_term)
     print(f"Találatok száma: {result_count}")
+    
+
+'''
+from OpenFoodApi.OpenFoodQuery import OpenFoodQuery
+import json
+import requests
+import logging
+
+if __name__ == "__main__":
+    off_api = OpenFoodQuery(language="en")
+
+    try:
+        search_results = off_api.search_products(
+            search_term="chocolate",
+            sort_by="popularity",
+            tagtype_0="allergens",
+            tag_contains_0="en:milk"
+        )
+        print("--- Nyers API válasz ---")
+        print(json.dumps(search_results, indent=4))
+
+        print("\n--- Bővített keresési eredmények (csokoládé, tejallergiamentes, népszerűség szerint rendezve) ---")
+        for product in search_results.get("products", []):
+            print(f"  - {product.get('product_name', 'N/A')} ({product.get('brands', 'N/A')})")
+
+    except OpenFoodFactsAPIError as e:
+        logging.error(f"Hiba a keresés során (OpenFoodFactsAPIError): {e}")
+        print(f"Hiba történt (OpenFoodFactsAPIError): {e}")
+    except Exception as e:
+        logging.error(f"Hiba a keresés során: {e}")
+        print(f"Hiba történt: {e}")
+
+'''

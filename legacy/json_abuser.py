@@ -33,14 +33,9 @@ json_adat = '''
     ]
 }
 '''
-
-# JSON betöltése Python dict-be
 adat = json.loads(json_adat)
 
-# Étel neve
 print(f"Étel neve: {adat['description']}")
-
-# Összes tápanyag listázása
 print("\nTápanyagok:")
 for nutrient in adat["foodNutrients"]:
     nev = nutrient["nutrient"]["name"]
@@ -48,21 +43,15 @@ for nutrient in adat["foodNutrients"]:
     egyseg = nutrient["nutrient"]["unitName"]
     print(f"- {nev}: {mennyiseg} {egyseg}")
 
-
-# Fehérje (Protein) kikeresése
 for nutrient in adat["foodNutrients"]:
     if nutrient["nutrient"]["name"] == "Protein":
         print(f"Protein: {nutrient['amount']} {nutrient['nutrient']['unitName']}")
 
-
-
-# Dictionary létrehozása gyors kereséshez
 nutrients_dict = {
     nutrient["nutrient"]["name"]: nutrient
     for nutrient in adat["foodNutrients"]
 }
 
-# Fehérje gyors elérése
 if "Protein" in nutrients_dict:
     protein = nutrients_dict["Protein"]
     print(f"Protein: {protein['amount']} {protein['nutrient']['unitName']}")

@@ -27,16 +27,20 @@ class OpenFoodQuery:
             return response.json()
         
         except requests.exceptions.HTTPError as e:
-
             logging.error(f"API request failed to {url} with status code {response.status_code}: {e}")
-
-            raise OpenFoodFactsAPIError(f"API request failed: {e}")
+            raise OpenFoodFactsAPIError(f"HTTP error: {e}")
         
         except requests.exceptions.RequestException as e:
-
             logging.error(f"Netwrok error during request to {url}: {e}")
+            raise OpenFoodFactsAPIError(f"Request failed: {e}")
+        
+        except ValueError as e:
+            logging.error(f"Invalid JSON response from {url}: {e}")
+            raise OpenFoodFactsAPIError("Invalid JSON response")
 
-            raise OpenFoodFactsAPIError(f"API request failed: {e}")
+        except Exception as e:
+            logging.exception(f"Unexpected error during API request to {url}")
+            raise OpenFoodFactsAPIError(f"Unexpected error: {str(e)}")
 
     def get_product(self, barcode: str) -> Optional[Dict]:
        

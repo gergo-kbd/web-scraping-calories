@@ -4,9 +4,9 @@ from OpenFoodApi.OpenFoodQuery import *
 
 @pytest.fixture
 def api():
-    return OpenFoodQuery
+    return OpenFoodQuery()
 
-def test_get_product_success(api):
+def test_get_product_success(api: type[OpenFoodQuery]):
     mock_response = {
         "status": 1,
         "product": {
@@ -22,10 +22,8 @@ def test_get_product_success(api):
         product = api.get_product("1234567890123")
         assert product["product_name"] == "Test Product"
 
-def test_get_product_not_found(api):
-    mock_response = {
-        "status": 0
-    }
+def test_get_product_not_found(api: type[OpenFoodQuery]):
+    mock_response = {"status": 0}
 
     with patch("OpenFoodApi.OpenFoodQuery.requests.get") as mock_get:
         mock_get.return_value = Mock(status_code=200)
@@ -34,14 +32,15 @@ def test_get_product_not_found(api):
         with pytest.raises(ProductNotFoundError):
             api.get_product("0000000000000")
 
-def test_get_product_api_error(api):
+def test_get_product_api_error(api: type[OpenFoodQuery]):
     with patch("OpenFoodApi.OpenFoodQuery.requests.get") as mock_get:
-        mock_get.side_effect = Exception("Network error")
+        #mock_get.side_effect = Exception("Network error")
+        mock_get.side_effect = requests.exceptions.RequestException("Network error")
 
         with pytest.raises(OpenFoodFactsAPIError):
             api.get_product("1234567890123")
 
-def test_search_products(api):
+def test_search_products(api: type[OpenFoodQuery]):
     mock_response = {
         "products": [
             {"product_name": "Product A", "code": "111"},

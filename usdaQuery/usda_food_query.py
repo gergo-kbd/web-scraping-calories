@@ -1,7 +1,5 @@
 import requests
 
-#BASE_URL = "https://api.nal.usda.gov/fdc/v1/" #foods/search
-
 with open("api_key.txt", "r") as file:
         API_KEY = file.read().strip()
 
@@ -12,7 +10,7 @@ class UsdaFoodQuery:
     def __init__(self, api_key):
         self.api_key = api_key
         
-    def search_food(self, query, page_size = 5):
+    def search_food(self, query, page_size = 5, data_type=None):
         url = f"{self.BASE_URL}/foods/search"
         
         params = {
@@ -20,6 +18,13 @@ class UsdaFoodQuery:
             "query": query,
             "pageSize": page_size,
         }
+
+        # "Branded", "Survey (FNDDS)", "Foundation"
+        if data_type:
+            if isinstance(data_type, list):
+                params["dataType"] = data_type
+            else:
+                params["dataType"] = [data_type]
     
         try:
             response = requests.get(url, params=params)
@@ -34,23 +39,8 @@ class UsdaFoodQuery:
         except NoResultsFound as e:
             print("Search results:", e)
             raise
-
         except requests.exceptions.RequestException as req_err:
             print(f"Request error: {req_err}")
-        try:
-            print("Response JSON: response.json())") #response.json())
-        except Exception:
-            print("Cannot read json from the response.")
-            raise
-        
-        except NoResultsFound as e:
-            print("Search results:", e)
-            raise
-
-        except requests.exceptions.RequestException as req_err:
-            print(f"Request error: {req_err}")
-            return None  # ha ezt várod a tesztben
-
         except Exception as e:
             print("General error:", e)
             raise
@@ -58,19 +48,3 @@ class UsdaFoodQuery:
 class NoResultsFound(Exception):
     #If there is no hit
     pass
-
-
-
-'''
-        response = requests.get(url, params=params)
-
-        if response.status_code != 200:
-            raise Exception(f"Error: {response.status_code} - {response.text}")
-
-        data = response.json()
-
-        if "foods" not in data:
-            raise Exception(f"Response has no 'foods' field: {data}")
-
-        return data["foods"]
-'''

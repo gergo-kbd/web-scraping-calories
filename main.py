@@ -35,14 +35,20 @@ if __name__ == "__main__":
 
     query = UsdaFoodQuery(api_key=API_KEY)
     try:
-        foods = query.search_food("banana")
-        for food in foods:
+        foodquery = query.search_food("banana, raw", 1, data_type=["Survey (FNDDS)","Foundation"])
+
+    
+    except NoResultsFound as e:
+        print(e)
+    except Exception as e:
+        print("Error:", e)
+
+    #foodquery
+    
+
+'''
+    for food in foods:
             print(food["description"])
             #print(food)
             print(f"{food['description']} (ID: {food['fdcId']})")
-
-    except NoResultsFound as e:
-        print("No hit:", e)
-    except Exception as e:
-        print("Error:", e)
-    
+            '''

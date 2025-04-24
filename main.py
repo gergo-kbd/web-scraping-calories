@@ -23,6 +23,7 @@ if __name__ == "__main__":
 
 
 from OpenFoodApi.OpenFoodQuery import *
+from OpenFoodApi.models import *
 import json
 import requests
 
@@ -44,7 +45,7 @@ if __name__ == "__main__":
     barcode_apenta="5998821515771"
 
     try:
-        food = api_client.get_product(barcode_penny_water)
+        food = api_client.get_product(barcode_apenta)
 
         print(f"name: {food.get('product_name', 'N/A')}")
         print(f"brand: {food.get('brands', 'N/A')}")
@@ -57,9 +58,16 @@ if __name__ == "__main__":
     except OpenFoodFactsAPIError as e:
         print(f"API error: {e}")
 
+    food_data_peanut_noodle_kit = api_client.get_product(barcode_peanut_noodle_kit)
+    food_apenta = api_client.get_product(barcode_apenta)
+    #print(food_data_peanut_noodle_kit.get('nutriments', {}))
 
 
+    peanut_noodle_kit_info = ProductInfo.from_json(food_data_peanut_noodle_kit)
+    apenta_info = ProductInfo.from_json(food_apenta)
 
+    print(peanut_noodle_kit_info)
+    #print(apenta_info)
 
     #if product:
     #    print(json.dumps(product, indent=4))  # Szép nyomtatás JSON formátumban

@@ -22,7 +22,7 @@ if __name__ == "__main__":
         '''
 
 
-from OpenFoodApi.OpenFoodQuery import OpenFoodQuery
+from OpenFoodApi.OpenFoodQuery import *
 import json
 import requests
 
@@ -38,18 +38,37 @@ def get_search_result_count(search_term):
 
 if __name__ == "__main__":
     
-    api_client = OpenFoodQuery(language="en")
+    api_client = OpenFoodQuery()
     
-    # Példa: Termék keresése vonalkód alapján
-    print("Példa: Termék keresése vonalkód alapján...")
-    barcode = "737628064502"  # Helyettesítsd egy valós vonalkóddal
-    product = api_client.get_product(barcode)
-    if product:
-        print(json.dumps(product, indent=2))  # Szép nyomtatás JSON formátumban
-    else:
-        print(f"Nem található termék ezzel a vonalkóddal: {barcode}")
+    barcode_peanut_noodle_kit = "737628064502"  
+    barcode_apenta="5998821515771"
 
-    # Példa: Keresés terméknév alapján
+    try:
+        food = api_client.get_product(barcode_penny_water)
+
+        print(f"name: {food.get('product_name', 'N/A')}")
+        print(f"brand: {food.get('brands', 'N/A')}")
+        print(f"quantity: {food.get('quantity', 'N/A')}")
+        #print(f"nutriments: {food.get('nutriments', 'N/A')}")
+        print(f"nutriments: {food.get('nutriments', {}).get('energy-kcal_100g', 'N/A')}")
+
+    except ProductNotFoundError:
+        print("no such barcode")
+    except OpenFoodFactsAPIError as e:
+        print(f"API error: {e}")
+
+
+
+
+
+    #if product:
+    #    print(json.dumps(product, indent=4))  # Szép nyomtatás JSON formátumban
+    #else:
+    #    print(f"Nem található termék ezzel a vonalkóddal: {barcode}")
+
+
+
+    '''
     print("\nPélda: Keresés terméknév alapján...")
     search_term = "chocolate"  # Helyettesítsd a saját keresőkifejezéseddel
     results = api_client.search_products(search_term)
@@ -68,7 +87,7 @@ if __name__ == "__main__":
     print(f"Találatok száma: {result_count}")
     
 
-'''
+
 from OpenFoodApi.OpenFoodQuery import OpenFoodQuery
 import json
 import requests

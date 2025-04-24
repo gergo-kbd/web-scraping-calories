@@ -1,6 +1,5 @@
 import requests
 
-
 #BASE_URL = "https://api.nal.usda.gov/fdc/v1/" #foods/search
 
 with open("api_key.txt", "r") as file:
@@ -43,7 +42,7 @@ class UsdaFoodQuery:
         except Exception:
             print("Cannot read json from the response.")
             raise
-        ###
+        
         except NoResultsFound as e:
             print("Search results:", e)
             raise

@@ -15,6 +15,7 @@ class ProductInfo:
     trans_fat_100g: float
     fiber_100g: float
     image_url: str
+    vitamin_b6: float
 
     @staticmethod
     def from_json(data: Dict) -> "ProductInfo":
@@ -31,5 +32,6 @@ class ProductInfo:
             fat_100g = nutriments.get('fat_100g', 'N/A'),
             saturated_fat_100g = nutriments.get('saturated-fat_100g', 'N/A'),
             trans_fat_100g = nutriments.get('trans-fat_100g', 'N/A'),
+            vitamin_b6 = nutriments.get('vitamin-b6', 'N/A'),
             image_url = data.get("image_front_small_url", "")
         )

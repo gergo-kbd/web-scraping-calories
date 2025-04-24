@@ -33,5 +33,5 @@ def test_search_request_exception(mock_get):
     query = UsdaFoodQuery(api_key="dummy")
     result = query.search_food("apple")
 
-    assert result is None  # vagy assert, amit elvársz
+    assert result is None  
 

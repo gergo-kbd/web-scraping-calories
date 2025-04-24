@@ -3,6 +3,7 @@ from OpenFoodApi.models import *
 import json
 import requests
 from usdaQuery.usda_food_query import *
+from usdaQuery.models import *
 
 with open("api_key.txt", "r") as file:
         API_KEY = file.read().strip()
@@ -35,20 +36,14 @@ if __name__ == "__main__":
 
     query = UsdaFoodQuery(api_key=API_KEY)
     try:
-        foodquery = query.search_food("banana, raw", 1, data_type=["Survey (FNDDS)","Foundation"])
-
-    
+        banana_query = query.search_food("banana, raw", page_size = 2, data_type=["Survey (FNDDS)","Foundation"])
     except NoResultsFound as e:
         print(e)
     except Exception as e:
         print("Error:", e)
 
-    #foodquery
-    
-
-'''
-    for food in foods:
-            print(food["description"])
-            #print(food)
-            print(f"{food['description']} (ID: {food['fdcId']})")
-            '''
+    parsed_banana_info = FoodItem.from_dict(banana_query)
+    print(parsed_banana_info.description)
+    print(parsed_banana_info.fdc_id)
+    print(parsed_banana_info.data_type)
+    print(parsed_banana_info.nutrients['Protein'].amount)

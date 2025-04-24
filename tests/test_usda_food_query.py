@@ -13,7 +13,7 @@ def test_search_success(mock_get):
     query = UsdaFoodQuery(api_key="dummy")
     result = query.search_food("apple")
 
-    assert result == [{"name": "apple"}]
+    assert result == {"foods": [{"name": "apple"}]}
 
 @patch("usdaQuery.usda_food_query.requests.get")
 def test_search_no_results(mock_get):

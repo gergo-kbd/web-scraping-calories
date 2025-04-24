@@ -34,7 +34,7 @@ class UsdaFoodQuery:
             if "foods" not in data or len(data["foods"]) == 0:
                 raise NoResultsFound(f"No hit for '{query}'.")
 
-            return data["foods"]
+            return data
 
         except NoResultsFound as e:
             print("Search results:", e)

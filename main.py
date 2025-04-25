@@ -55,21 +55,7 @@ if __name__ == "__main__":
         print("nutrients:")
         for nutrient_name, nutrient in item.nutrients.items():
             print(f"  {nutrient.name}: {nutrient.amount} {nutrient.unit}")
-
-    
-
     '''
-
-    if banana_item:
-        print("--- A banana_item lista első elemének típusa ---")
-        print(type(banana_item[0]))
-        print("--- A banana_item lista első elemének adatai ---")
-        print(f"ID: {getattr(banana_item[0], 'fdc_id', 'Nincs ID')}")
-        print(f"Leírás: {getattr(banana_item[0], 'description', 'Nincs leírás')}")
-        print("---")
-    else:
-        print("--- A banana_item lista üres ---")
-
 
 
     parsed_banana_info = FoodItem.from_dict(banana_query)

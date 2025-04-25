@@ -48,23 +48,15 @@ if __name__ == "__main__":
         print(food.get('description', 'Description not found'))
         print(f"{food.get('description', 'Description not found')} (ID: {food.get('fdcId', 'ID not found')})")
 
-    # This is the line that's causing the issue
-    banana_item = FoodItem.from_dict(banana_query)
+    banana_item = FoodItem.from_dict(banana_query['foods'])
 
-    print("--- A banana_query['foods'] első 3 eleme  ---")
-    if 'foods' in banana_query:
-        for i, food in enumerate(banana_query['foods']):
-            if i < 3:
-                print(f"Elem {i+1}: {food.get('description')}, ID: {food.get('fdcId')}")
-            else:
-                break
-    else:
-        print("'foods' kulcs nem található a banana_query-ban")
-    print("---")
+    for item in banana_item:
+        print(f"\nFood name: {item.description}")
+        print("nutrients:")
+        for nutrient_name, nutrient in item.nutrients.items():
+            print(f"  {nutrient.name}: {nutrient.amount} {nutrient.unit}")
 
-    print("--- A banana_item lista hossza ---")
-    print(len(banana_item))
-    print("---")
+    
 
     '''
 

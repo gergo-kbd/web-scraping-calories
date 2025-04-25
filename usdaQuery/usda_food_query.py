@@ -1,6 +1,7 @@
 import requests
 import json
 import logging
+from usdaQuery import *
 
 with open("api_key.txt", "r") as file:
         API_KEY = file.read().strip()
@@ -36,10 +37,12 @@ class UsdaFoodQuery:
             data = response.json()
 
             if "foods" not in data or not data["foods"]:
-                raise NoResultsFound(f"No results foound for {query}.")
+                raise NoResultsFound(f"No results found for {query}.")
             
-
             return data
+            #return Fooditem.from_dict(data)
+            # not sure which way to go
+
 
         except requests.exceptions.HTTPError as http_err:
             logging.error(f"HTTP Error: {http_err}")

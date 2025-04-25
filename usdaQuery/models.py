@@ -6,7 +6,7 @@ class FoodNutrient:
     name: str
     amount: float
     unit: str
-
+    
 @dataclass
 class FoodItem:
     fdc_id: int
@@ -17,37 +17,26 @@ class FoodItem:
 
 
     @staticmethod
-    def from_dict(food_dict: Dict) -> List["FoodItem"]:
-        food_items = food_dict.get("foods", [])
+    def from_dict(food_list: List[Dict]) -> List["FoodItem"]:
         result = []
-
-        for food_item in food_items:
+        for food_item_data in food_list:
             nutrients = {
                 n["nutrientName"]: FoodNutrient(
-                    name = n["nutrientName"],
-                    amount = n.get("value", 0.0),
-                    unit = n.get("unitName", "")
+                    name=n["nutrientName"],
+                    amount=n.get("value", 0.0),
+                    unit=n.get("unitName", "")
                 )
-                for n in food_item.get("foodNutrients", [])
+                for n in food_item_data.get("foodNutrients", [])
             }
 
-        result.append(
-            FoodItem(
-            fdc_id=food_item.get("fdcId", 0),
-            description=food_item.get("description", "Unknown Description"),
-            data_type=food_item.get("dataType", "Unknown DataType"),
-            category=food_item.get("foodCategory", None),
-            nutrients=nutrients
+            result.append(
+                FoodItem(
+                    fdc_id=food_item_data.get("fdcId", 0),
+                    description=food_item_data.get("description", "Unknown Description"),
+                    data_type=food_item_data.get("dataType", "Unknown DataType"),
+                    category=food_item_data.get("foodCategory", None),
+                    nutrients=nutrients
+                )
             )
-        )
-        return result
-'''
-nutrients = {
-            n["nutrientName"]: FoodNutrient(
-                name=n["nutrientName"],
-                amount=n.get("value", 0.0),
-                unit=n.get("unitName", "")
-            )
-            for n in food_item.get("foodNutrients", [])
-        }
-'''
+
+        return result  

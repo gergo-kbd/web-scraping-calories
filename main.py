@@ -48,16 +48,56 @@ if __name__ == "__main__":
         print(food.get('description', 'Description not found'))
         print(f"{food.get('description', 'Description not found')} (ID: {food.get('fdcId', 'ID not found')})")
 
-    #TODO : what if there are more hits?
-
-
+    # This is the line that's causing the issue
     banana_item = FoodItem.from_dict(banana_query)
 
+    print("--- A banana_query['foods'] első 3 eleme  ---")
+    if 'foods' in banana_query:
+        for i, food in enumerate(banana_query['foods']):
+            if i < 3:
+                print(f"Elem {i+1}: {food.get('description')}, ID: {food.get('fdcId')}")
+            else:
+                break
+    else:
+        print("'foods' kulcs nem található a banana_query-ban")
+    print("---")
 
-'''
+    print("--- A banana_item lista hossza ---")
+    print(len(banana_item))
+    print("---")
+
+    '''
+
+    if banana_item:
+        print("--- A banana_item lista első elemének típusa ---")
+        print(type(banana_item[0]))
+        print("--- A banana_item lista első elemének adatai ---")
+        print(f"ID: {getattr(banana_item[0], 'fdc_id', 'Nincs ID')}")
+        print(f"Leírás: {getattr(banana_item[0], 'description', 'Nincs leírás')}")
+        print("---")
+    else:
+        print("--- A banana_item lista üres ---")
+
+
+
     parsed_banana_info = FoodItem.from_dict(banana_query)
     print(parsed_banana_info.description)
     print(parsed_banana_info.fdc_id)
     print(parsed_banana_info.data_type)
     print(parsed_banana_info.nutrients['Protein'].amount)
+
+
+for item in banana_item:
+        print(f"Food: {item.description} (ID: {item.fdc_id})")
+    for nutrient_name, nutrient in item.nutrients.items():
+        print(f"  - {nutrient_name}: {nutrient.amount} {nutrient.unit}")
+
+    print("--- Printing each banana item with its nutrients ---")
+    for item in banana_item:
+        print("---")
+        print(f"Food: {item.description} (ID: {item.fdc_id})")
+        print("Nutrients:")
+        for nutrient_name, nutrient in item.nutrients.items():
+            print(f"  - {nutrient_name}: {nutrient.amount} {nutrient.unit}")
+        print("---")
 '''

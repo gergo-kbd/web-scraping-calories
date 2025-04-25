@@ -15,7 +15,6 @@ class FoodItem:
     category: Optional[str]
     nutrients: Dict[str, FoodNutrient]
 
-
     @staticmethod
     def from_dict(food_list: List[Dict]) -> List["FoodItem"]:
         result = []
@@ -38,5 +37,4 @@ class FoodItem:
                     nutrients=nutrients
                 )
             )
-
-        return result  
+        return result     

@@ -43,7 +43,6 @@ class UsdaFoodQuery:
             #return Fooditem.from_dict(data)
             # not sure which way to go
 
-
         except requests.exceptions.HTTPError as http_err:
             logging.error(f"HTTP Error: {http_err}")
             raise
@@ -63,16 +62,3 @@ class UsdaFoodQuery:
 class NoResultsFound(Exception):
     #If there is no hit
     pass
-
-
-'''
-
-except NoResultsFound as e:
-            print("Search results:", e)
-            raise
-        except requests.exceptions.RequestException as req_err:
-            print(f"Request error: {req_err}")
-        except Exception as e:
-            print("General error:", e)
-            raise
-'''

@@ -9,7 +9,6 @@ class OpenFoodFactsAPIError(Exception):
 class ProductNotFoundError(OpenFoodFactsAPIError):
     pass
 
-   
 class OpenFoodQuery:
     BASE_URL = "https://world.openfoodfacts.org/api/v2"
 

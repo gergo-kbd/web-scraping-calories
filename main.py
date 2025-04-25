@@ -34,6 +34,8 @@ if __name__ == "__main__":
     print(peanut_noodle_kit_info)
     print(apenta_info)
 
+    #############################################################################################################
+
     query = UsdaFoodQuery(api_key=API_KEY)
     try:
         banana_query = query.search_food("banana, raw", page_size = 3, data_type=["Survey (FNDDS)","Foundation"])
@@ -48,34 +50,18 @@ if __name__ == "__main__":
         print(food.get('description', 'Description not found'))
         print(f"{food.get('description', 'Description not found')} (ID: {food.get('fdcId', 'ID not found')})")
 
-    banana_item = FoodItem.from_dict(banana_query['foods'])
+    banana_food_item = FoodItem.from_dict(banana_query['foods'])
 
-    for item in banana_item:
+    for item in banana_food_item:
         print(f"\nFood name: {item.description}")
         print("nutrients:")
         for nutrient_name, nutrient in item.nutrients.items():
             print(f"  {nutrient.name}: {nutrient.amount} {nutrient.unit}")
     '''
-
-
     parsed_banana_info = FoodItem.from_dict(banana_query)
     print(parsed_banana_info.description)
     print(parsed_banana_info.fdc_id)
     print(parsed_banana_info.data_type)
     print(parsed_banana_info.nutrients['Protein'].amount)
 
-
-for item in banana_item:
-        print(f"Food: {item.description} (ID: {item.fdc_id})")
-    for nutrient_name, nutrient in item.nutrients.items():
-        print(f"  - {nutrient_name}: {nutrient.amount} {nutrient.unit}")
-
-    print("--- Printing each banana item with its nutrients ---")
-    for item in banana_item:
-        print("---")
-        print(f"Food: {item.description} (ID: {item.fdc_id})")
-        print("Nutrients:")
-        for nutrient_name, nutrient in item.nutrients.items():
-            print(f"  - {nutrient_name}: {nutrient.amount} {nutrient.unit}")
-        print("---")
 '''

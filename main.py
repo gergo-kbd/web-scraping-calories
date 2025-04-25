@@ -36,14 +36,28 @@ if __name__ == "__main__":
 
     query = UsdaFoodQuery(api_key=API_KEY)
     try:
-        banana_query = query.search_food("banana, raw", page_size = 2, data_type=["Survey (FNDDS)","Foundation"])
+        banana_query = query.search_food("banana, raw", page_size = 3, data_type=["Survey (FNDDS)","Foundation"])
     except NoResultsFound as e:
         print(e)
     except Exception as e:
         print("Error:", e)
 
+    #print(banana_query)
+
+    for food in banana_query.get('foods', []):  
+        print(food.get('description', 'Description not found'))
+        print(f"{food.get('description', 'Description not found')} (ID: {food.get('fdcId', 'ID not found')})")
+
+    #TODO : what if there are more hits?
+
+
+    banana_item = FoodItem.from_dict(banana_query)
+
+
+'''
     parsed_banana_info = FoodItem.from_dict(banana_query)
     print(parsed_banana_info.description)
     print(parsed_banana_info.fdc_id)
     print(parsed_banana_info.data_type)
     print(parsed_banana_info.nutrients['Protein'].amount)
+'''

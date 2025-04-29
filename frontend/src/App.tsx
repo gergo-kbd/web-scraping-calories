@@ -6,11 +6,12 @@ interface FoodItem{
 }
 
 function App() {
-  const [foods, setFoods] = useState([]);
+  const [foods, setFoods] = useState<FoodItem[]>([]);
 
   const searchFood = async () => {
     try{
-      const response = await axios.get<FoodItem>("http://localhost:8000/search_food?query=banana");
+      const response = await axios.get<FoodItem[]>("http://localhost:8000/search_food?query=banana");
+
       setFoods(response.data);
     } catch (error){
       console.error("Error occured during API call", error);

@@ -9,7 +9,7 @@ app = FastAPI()
 with open("api_key.txt", "r") as file:
         API_KEY = file.read().strip()
 
-@app.get("search_food")
+@app.get("/search_food")
 def get_food(query:str):
     q = UsdaFoodQuery(API_KEY)
     data = q.search_food(query)

@@ -31,7 +31,6 @@ def test_search_request_exception(mock_get):
     mock_get.side_effect = RequestException("network down")
 
     query = UsdaFoodQuery(api_key="dummy")
-    result = query.search_food("apple")
-
-    assert result is None  
+    with pytest.raises(RequestException):
+        query.search_food("apple")
 

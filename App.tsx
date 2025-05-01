@@ -37,7 +37,7 @@ export default function App() {
       <div className="flex gap-2 mb-6">
         <input
           type="text"
-          placeholder="Keresés (pl. banana)"
+          placeholder="search (e.g. banana)"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={(e) => {
@@ -49,7 +49,7 @@ export default function App() {
           onClick={searchFood}
           className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
         >
-          Keresés
+          search
         </button>
       </div>
 

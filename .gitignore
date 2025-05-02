@@ -6,15 +6,15 @@ venv/
 
 # python
 __pycache__/
-*.py[cod]  # .pyc, .pyo, .pyd fájlok
-*.json     # Bár van egy külön sorod rá, ide is illik a Pythonhoz kapcsolódóan
-output.txt # Ha ez tipikusan Python szkriptek kimenete
+*.py[cod]  
+*.json     
+output.txt 
 
 # db
 *.db
 foundation_foods.db
 usda_pretty.json
-foundationDownload/ # Ha ez egy letöltött adatokat tartalmazó mappa
+foundationDownload/
 
 # test
 .pytest_cache/
@@ -29,9 +29,8 @@ legacy/__pycache__/
 *.log
 *.tmp
 *.swp
-*.DS_Store      # macOS rendszerfájl
-Thumbs.db       # Windows rendszerfájl
+*.DS_Store      
+Thumbs.db       
 
 # special files
 api_key.txt
-calorie_killer.py # Ha nem akarod véletlenül sem ignorálni, vedd ki innen

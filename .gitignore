@@ -4,7 +4,7 @@
 env/
 venv/
 
-# Python 
+# python
 __pycache__/
 *.py[cod]  # .pyc, .pyo, .pyd fájlok
 *.json     # Bár van egy külön sorod rá, ide is illik a Pythonhoz kapcsolódóan
@@ -16,11 +16,11 @@ foundation_foods.db
 usda_pretty.json
 foundationDownload/ # Ha ez egy letöltött adatokat tartalmazó mappa
 
-# Test
+# test
 .pytest_cache/
 tests/__pycache__/
 
-# React frontend
+# react frontend
 frontend/node_modules/
 frontend/build/
 
@@ -32,6 +32,6 @@ legacy/__pycache__/
 *.DS_Store      # macOS rendszerfájl
 Thumbs.db       # Windows rendszerfájl
 
-# Special files
+# special files
 api_key.txt
 calorie_killer.py # Ha nem akarod véletlenül sem ignorálni, vedd ki innen

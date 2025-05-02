@@ -1,10 +1,12 @@
+import os
 import requests
 import json
 import logging
 from usdaQuery import *
 
-with open("api_key.txt", "r") as file:
-        API_KEY = file.read().strip()
+current_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(os.path.dirname(current_dir))
+api_key_path = os.path.join(project_root, "api_key.txt")
 
 class UsdaFoodQuery:
 

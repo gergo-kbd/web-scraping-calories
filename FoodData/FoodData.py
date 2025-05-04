@@ -23,14 +23,23 @@ except Exception as e:
 query = UsdaFoodQuery(api_key=API_KEY)
 
 try:
-    UsdaFoodjson = query.search_food("egg", page_size=1, data_type=["Survey (FNDDS)","Foundation"])
+    UsdaFoodjson = query.search_food("egg", page_size=2, data_type=["Survey (FNDDS)","Foundation"])
 except NoResultsFound as e:
     print(e)
 except Exception as e:
     print("ERROR", e)
 
-print(type(UsdaFoodjson))
-food_df = pd.DataFrame(UsdaFoodjson)
-print(UsdaFoodjson)
+foods_data = UsdaFoodjson.get('foods')
+
+food_df = pd.DataFrame(foods_data)
+
+print(food_df['foodNutrients'].head())
+
+#print(food_df['foodNutrients'].iloc[0])
+
+for index, row in food_df.iterrows():
+    for nutrient in row['foodNutrients']:
+        if nutrient['nutrientName'] == 'Protein':
+            print(f"{row['description']}: {nutrient['value']} {nutrient['unitName']}")
 
 

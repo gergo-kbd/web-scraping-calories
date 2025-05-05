@@ -1,4 +1,5 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 import sys
 import os
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -41,5 +42,12 @@ for index, row in food_df.iterrows():
     for nutrient in row['foodNutrients']:
         if nutrient['nutrientName'] == 'Protein':
             print(f"{row['description']}: {nutrient['value']} {nutrient['unitName']}")
+
+food_df.plot
+
+plt.show()
+
+plt.savefig(sys.stdout.buffer)
+sys.stdout.flush()
 
 

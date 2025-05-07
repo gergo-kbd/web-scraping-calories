@@ -1,4 +1,4 @@
-# USDA and Open Food Facts Query
+# Fullstack applicaton with USDA Food database and Open Fodd Facts
 
 This project provides a simple object-oriented Python wrapper for the [USDA FoodData Central API](https://fdc.nal.usda.gov/api-key-signup.html), allowing you to search for foods and retrieve basic nutritional information.
 

@@ -10,7 +10,7 @@ This project provides a simple object-oriented Python wrapper for the [USDA Food
 git clone https://github.com/yourusername/usda-food-query.git
 ```
 
-## 🐍 Setting Up with Conda (Optional)
+## Setting Up with Conda (Optional)
 
 If you're using [Anaconda](https://www.anaconda.com/) or Miniconda, you can create and manage the environment like this:
 

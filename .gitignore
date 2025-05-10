@@ -34,3 +34,6 @@ Thumbs.db
 
 # special files
 api_key.txt
+
+# legacy folder
+legacy/

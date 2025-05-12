@@ -24,8 +24,6 @@ tests/__pycache__/
 frontend/node_modules/
 frontend/build/
 
-legacy/__pycache__/
-
 *.log
 *.tmp
 *.swp

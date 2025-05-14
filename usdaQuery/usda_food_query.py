@@ -14,8 +14,6 @@ class UsdaFoodQuery:
 
     def __init__(self, api_key):
         self.api_key = api_key
-        #logging.basicConfig(level=logging.ERROR,  # Or logging.INFO, etc.
-        #                    format='%(asctime)s - %(levelname)s - %(message)s')
         
     def search_food(self, query, page_size = 5, data_type=None):
         url = f"{self.BASE_URL}/foods/search"

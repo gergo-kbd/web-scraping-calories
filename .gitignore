@@ -38,3 +38,6 @@ legacy/
 
 #reponse.json
 reponse.json
+
+# temp json in FoodSpark
+FoodSpark/usda_hit.json

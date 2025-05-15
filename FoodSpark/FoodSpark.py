@@ -1,5 +1,5 @@
 from pyspark.sql import SparkSession
-
+import json
 import pandas as pd
 import matplotlib.pyplot as plt
 import sys
@@ -26,15 +26,37 @@ except Exception as e:
 query = UsdaFoodQuery(api_key=API_KEY)
 
 try:
-    UsdaFoodjson = query.search_food("egg", page_size=2, data_type=["Survey (FNDDS)","Foundation"])
+    UsdaFoodjson = query.search_food("egg", page_size=1, data_type=["Survey (FNDDS)","Foundation"])
 except NoResultsFound as e:
     print(e)
 except Exception as e:
     print("ERROR", e)
 
+file_path = "usda_hit.json"
+try:
+    with open(file_path, 'w', encoding='utf-8') as f:
+        json.dump(UsdaFoodjson, f, ensure_ascii=False, indent=4)
+except IOError as e:
+    print(f"error occured during saving json: {e}")
 
-spark = SparkSession.builder.appName("FoodDataProcessing").getOrCreate()
 
-df = spark.read.json(UsdaFoodjson)
-df.printScheam()
+spark = SparkSession.builder.appName("FoodSpark").getOrCreate()
+
+
+data = spark.read.format('json').option('multiline', 'true').load("usda_hit.json")
+
+data.printSchema()
+data.show()
+
+
+'''
+Usda_rdd = spark.sparkContext.parallelize(UsdaFoodjson)
+Usda_df = spark.createDataFrame(Usda_rdd)
+
+Usda_df.printSchema()
+Usda_df.show()
+'''
+
+
+
 

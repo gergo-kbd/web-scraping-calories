@@ -1,4 +1,5 @@
 from pyspark.sql import SparkSession
+from pyspark.sql.functions import explode
 import json
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -42,19 +43,26 @@ except IOError as e:
 
 spark = SparkSession.builder.appName("FoodSpark").getOrCreate()
 
+df_json = spark.read.format('json').option('multiline', 'true').load("usda_hit.json")
+df_foods = df_json.select(explode("foods").alias("food"))
+df_nutrients_flat = df_foods.select(
+    "food.fdcId",
+    "food.description",
+    explode("food.foodNutrients").alias("nutrient")
+)
+df_nutrients_flat.printSchema()
+df_nutrients_flat.show()
 
-data = spark.read.format('json').option('multiline', 'true').load("usda_hit.json")
-
-data.printSchema()
-data.show()
+df_nutrients_flat.show(truncate = False)
 
 
 '''
-Usda_rdd = spark.sparkContext.parallelize(UsdaFoodjson)
-Usda_df = spark.createDataFrame(Usda_rdd)
+df_nutrients_flat.write.csv("nutrients.csv", header=True)
 
-Usda_df.printSchema()
-Usda_df.show()
+df_nutrients_flat.write.parquet("nutrients.parquet")
+
+df_nutrients_flat.createOrReplaceTempView("nutrients")
+spark.sql("SELECT * FROM nutrients WHERE nutrientName = 'Protein'").show()
 '''
 
 

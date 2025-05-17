@@ -27,7 +27,7 @@ except Exception as e:
 query = UsdaFoodQuery(api_key=API_KEY)
 
 try:
-    UsdaFoodjson = query.search_food("egg", page_size=1, data_type=["Survey (FNDDS)","Foundation"])
+    UsdaFoodjson = query.search_food("banana", page_size=5, data_type=["Survey (FNDDS)","Foundation"])
 except NoResultsFound as e:
     print(e)
 except Exception as e:
@@ -55,7 +55,7 @@ df_nutrients_flat.show()
 
 df_nutrients_flat.show(truncate = False)
 
-
+#df_nutrients_flat.write.csv("nutrients.csv", header=True)
 '''
 df_nutrients_flat.write.csv("nutrients.csv", header=True)
 

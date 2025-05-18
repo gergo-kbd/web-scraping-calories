@@ -1,5 +1,5 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import explode
+from pyspark.sql.functions import explode, size
 import json
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -44,16 +44,21 @@ except IOError as e:
 spark = SparkSession.builder.appName("FoodSpark").getOrCreate()
 
 df_json = spark.read.format('json').option('multiline', 'true').load("usda_hit.json")
+
+#df_json.select(size("foods").alias("num_foods")).show()
+
 df_foods = df_json.select(explode("foods").alias("food"))
+
+#df_foods.select("food.fdcId", "food.description").show(truncate=False)
+
 df_nutrients_flat = df_foods.select(
     "food.fdcId",
     "food.description",
     explode("food.foodNutrients").alias("nutrient")
 )
-df_nutrients_flat.printSchema()
-df_nutrients_flat.show()
 
-df_nutrients_flat.show(truncate = False)
+df_nutrients_flat.show(150)
+
 
 #df_nutrients_flat.write.csv("nutrients.csv", header=True)
 '''

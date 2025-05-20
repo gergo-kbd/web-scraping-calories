@@ -39,5 +39,6 @@ legacy/
 #reponse.json
 reponse.json
 
-# temp json in FoodSpark
+# temp jsons in FoodSpark
 FoodSpark/usda_hit.json
+FoodSpark/FoodData_Central_foundation_food_json_2025-04-24.json

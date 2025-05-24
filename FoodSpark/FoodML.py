@@ -2,7 +2,8 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import explode, size, col
 import json
 from pyspark.ml.feature import VectorAssembler, StringIndexer
-from pyspark.ml import pipeline
+from pyspark.ml import Pipeline
+from pyspark.sql import functions as F
 
 #Saprksession starts here
 spark = SparkSession.builder.appName("FoodML").getOrCreate()
@@ -13,7 +14,7 @@ usda_fnds_json = spark.read.format('json').option('multiline', 'true').load("Foo
 # checking the schema
 #usda_fnds_json.printSchema()
 
-df_foods = usda_fnds_json.select(explode("foods").alias("food"))
+df_foods = usda_fnds_json.select(explode("FoundationFoods").alias("food"))
 
 # explode nutrients
 df_nutrients = df_foods.select(
@@ -26,14 +27,13 @@ df_nutrients = df_foods.select(
 df_nutrients =  df_nutrients.select(
     "fdcId",
     "description",
-    "foodCategory",
-    col("nutrient.nutrientName").alias("nutrient_name"),
-    col("nutrient.value").alias("nutrient_value"),
-    col("nutrient.unitName").alias("nutrient_unit")
+    col("nutrient.nutrient.name").alias("nutrient_name"),
+    col("nutrient.amount").alias("nutrient_value"),
+    col("nutrient.nutrient.unitName").alias("nutrient_unit")
 )
 
 # pivot
-df_nutrients_pivot = df_nutrients.groupBy("fdcId", "description", "foodCategory")\
+df_nutrients_pivot = df_nutrients.groupBy("fdcId", "description")\
     .pivot("nutrient_name")\
     .agg(F.first("nutrient_value"))
 
@@ -41,14 +41,14 @@ df_final = df_nutrients_pivot.fillna(0)
 
 #df_final.show(5)
 
-label_indexer = StringIndexer(inputCol="foodCategory",outputCol= "label")
+label_indexer = StringIndexer(inputCol="description",outputCol= "label")
 
-nutrient_cols =[col for col in df_final.columns if col not in["fdcId", "description", "foodCategory"]]
+nutrient_cols =[col for col in df_final.columns if col not in["fdcId", "description"]]
 
 assembler = VectorAssembler(inputCols=nutrient_cols, outputCol="features")
 
 #pipeline
-pipeline = pipeline(stages =[label_indexer, assembler])
+pipeline = Pipeline(stages =[label_indexer, assembler])
 
 df_rdy = pipeline.fit(df_final).transform(df_final)
 df_rdy.select("label", "features").show(truncate=False)

@@ -41,6 +41,18 @@ df_final = df_nutrients_pivot.fillna(0)
 
 #df_final.show(5)
 
+def sanitize_column_name(name):
+    return name.replace(" ", "_") \
+               .replace(",", "") \
+               .replace("(", "") \
+               .replace(")", "") \
+               .replace(".", "") \
+               .replace("/", "_") \
+               .replace("-", "_")
+
+cleaned_cols = [col(f"`{c}`").alias(sanitize_column_name(c)) for c in df_final.columns]
+df_final = df_final.select(*cleaned_cols)
+
 label_indexer = StringIndexer(inputCol="description",outputCol= "label")
 
 nutrient_cols =[col for col in df_final.columns if col not in["fdcId", "description"]]

@@ -7,7 +7,7 @@ This project provides a simple object-oriented Python wrapper for the [USDA Food
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/usda-food-query.git
+git clone https://github.com/gergo-kbd/usda-food-query.git
 ```
 
 ## Setting Up with Conda (Optional)
